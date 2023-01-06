@@ -23,7 +23,7 @@
     --black-color: black;
     --screenon: #7eaddf;
     --buttons-right : #1a8fcc;
-    --screen-name:#163b1f;
+    --screen-name:#3ab967;
     --white-font: #e7e1da ;
   }
 
@@ -38,6 +38,7 @@ body{
     flex-direction: column;
     width: 100%;
     height: 100vh;
+	font-family: 'Press Start 2P', cursive;
 }
 img{
 	width: 100%;
@@ -366,7 +367,7 @@ div#buttonGlass
         left: 120px;
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 22px;
     }
     div.buttonsBotomScreen{
         /* position: absolute; */
@@ -421,13 +422,13 @@ div#buttonGlass
 	}
     
     div#onOffButton{
-        /* position: absolute; */
-        /* position: absolute; */
+
         transition: all 1s ease-in-out;
         cursor: pointer;
 		width: 30px;
 		height: 30px;
 		/* margin-right: 10px; */
+		
         border: 1px solid var(--screen-bg-color-dos);
 		box-shadow: 0 0 10px var(--main-bg-color-shadow-curves);
 		-webkit-box-shadow: 0 0 10px var(--main-bg-color-shadow-curves);
@@ -443,13 +444,13 @@ div#buttonGlass
 		background: -webkit-radial-gradient( var(--red-miniButton-glass-color-dos), var(--red-miniButton-glass-color-uno));
 
 	}
-    .pantallaCursor{
+    div.pantallaCursor{
         position: absolute;
         top: -20px;
         left: 57px;
         display: flex;
         align-items: center;
-        gap: 10px;
+	
     }
     div#greenBox1
 	{
@@ -463,20 +464,19 @@ div#buttonGlass
 		top: 420px;
 		left:100px;
         font-size: 0.6rem;
-        color: var(--white-font);
-        font-family: 'Press Start 2P', cursive;
+        color: var(--box-shadow-buttons-color);
+        
 
 		border-radius: 6px;
 
-		box-shadow: 0 0 20px var(--screen-bg-color-uno) inset;
-		-webkit-box-shadow: 0 0 20px var(--screen-bg-color-uno) inset;
+		box-shadow: 0 0 20px var(--green-miniButton-glass-color-uno) inset;
+		-webkit-box-shadow: 0 0 20px var(--green-miniButton-glass-color-uno) inset;
 	}
 
     div#cross
 	{
 		width: 90px;
 		height: 90px;
-
 		position: absolute;
 		top: 394px;
 		left: 230px;
@@ -602,3 +602,242 @@ div#buttonGlass
 		-moz-border-bottom-right-radius: 5px;
 		-o-border-bottom-right-radius: 5px;
 	}
+
+	/* RIGHTSIDE */
+
+	.rightside{
+		width: 50%;
+		height: 50%;
+		position: relative;
+		top: 115px;
+		left: 366px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	div#stats
+	{
+		height: 80px;
+		width: 240px;
+		padding-bottom: 100px;
+		margin-bottom: 10px;
+		background-color: var(--screen-bg-color-uno);
+		font-size: 13px;
+		font-family: arial, sans-serif;
+		border-radius: 15px;
+		-webkit-border-radius: 15px;
+		-moz-border-radius: 15px;
+		-o-border-radius: 15px;
+		border: 1px solid var(--box-shadow-buttons-color);
+
+		box-shadow: 0 0 20px var(--box-shadow-buttons-color) inset;
+		-webkit-box-shadow: 0 0 20px var(--box-shadow-buttons-color) inset;
+
+	}
+	div#blueButtons{
+		display: flex;
+		flex-direction: column;
+		gap: 3px;
+		margin-bottom: 30px;
+	}
+	div.blueButton
+	{
+		height: 35px;
+		width : 45px;
+		background-color: var(--box-shadow-buttons-color);
+		float: left;
+		margin-right: 2px;
+		border: 1px solid var(--box-shadow-buttons-color);
+		border-radius: 3px;
+		background: linear-gradient(top, var(--blue-cristal-color-uno) 0%, var(--blue-buttons-color-dos) 80%);	
+		background: -webkit-linear-gradient(top, var(--blue-cristal-color-uno) 0%, var(--blue-buttons-color-dos) 80%);
+		/* background: -moz-linear-gradient(top, #307bfb 0%, #0530e5 80%);
+		background: -o-linear-gradient(top, #307bfb 0%, #0530e5 80%); */
+
+		box-shadow: -1px 2px var(--blue-buttons-color-shadow);
+		-webkit-box-shadow: -1px 2px var(--blue-buttons-color-shadow);
+		/* -moz-box-shadow: -1px 2px var(--blue-buttons-color-shadow);
+		-o-box-shadow: -1px 2px var(--blue-buttons-color-shadow); */
+	}
+	
+	.barbuttonsright{
+		position: absolute;
+		top: 195px;
+		left: 240px;
+		display: flex;
+		gap: 10px;
+	}
+	div#barbutton3
+	{
+		height: 9px;
+		width: 45px;
+		border-radius: 100px;
+		-webkit-border-radius: 100px;
+		-moz-border-radius: 100px;
+		-o-border-radius: 100px;
+
+		background: linear-gradient(top, var(--screen-bg-color-uno) 0%, var(--screen-bg-color-dos) 100%);	
+		background: -webkit-linear-gradient(top, var(--screen-bg-color-uno) 0%, var(--screen-bg-color-dos) 100%);
+		box-shadow: -1px 2px var(--box-shadow-buttons-color);
+		-webkit-box-shadow: -1px 2px var(--box-shadow-buttons-color);
+
+	}
+
+	div#barbutton4
+	{
+		height: 9px;
+		width: 45px;
+	
+		border-radius: 100px;
+		-webkit-border-radius: 100px;
+		-moz-border-radius: 100px;
+		-o-border-radius: 100px;
+
+		background: linear-gradient(top, var(--screen-bg-color-uno) 0%, var(--screen-bg-color-dos) 100%);	
+		background: -webkit-linear-gradient(top, var(--screen-bg-color-uno) 0%, var(--screen-bg-color-dos) 100%);
+		box-shadow: -1px 2px var(--main-bg-color-shadow-curves);
+		-webkit-box-shadow: -1px 2px var(--main-bg-color-shadow-curves);
+		-moz-box-shadow: -1px 2px var(--main-bg-color-shadow-curves);
+		-o-box-shadow: -1px 2px var(--main-bg-color-shadow-curves);
+	}
+	.nextresumelight{
+		display: flex;
+		align-items: center;
+		gap: 110px;
+		margin-bottom: 10px;
+	}
+	.whiteboxes{
+		display: flex;
+		gap: 5px;
+		
+	}
+	div#whiteBox1
+	{	
+		border: 1px solid var(--box-shadow-buttons-color);
+		width: 45px;
+		height: 30px;
+		background-color: var(--screen-bg-color-border);
+		border-radius: 6px;
+		box-shadow: 0 0 20px var(--screen-bg-color-border) inset;
+		/* margin-bottom: 10px; */
+	}
+    div#whiteBox2
+	{	
+		border: 1px solid var(--box-shadow-buttons-color);
+		width: 45px;
+		height: 30px;
+		background-color: var(--screen-bg-color-border);
+
+		border-radius: 6px;
+		box-shadow: 0 0 20px var(--screen-bg-color-border) inset;
+		-webkit-box-shadow: 0 0 20px var(--screen-bg-color-border) inset;
+		/* -moz-box-shadow: 0 0 20px var(--red-barButton-color-dos) inset;
+		-o-box-shadow: 0 0 20px var(--red-barButton-color-dos) inset; */
+	}
+	div#miniButtonGlass5
+	{	
+		border: 1px solid var(--box-shadow-buttons-color);
+		width: 25px;
+		height: 25px;
+		box-shadow: 0 0 10px var(--main-bg-color-shadow-curves);
+		-webkit-box-shadow: 0 0 10px var(--main-bg-color-shadow-curves);
+		-moz-box-shadow: 0 0 10px var(--main-bg-color-shadow-curves);
+		-o-box-shadow: 0 0 10px var(--main-bg-color-shadow-curves);
+
+		border-radius: 20px;
+		-webkit-border-radius: 20px;
+		-moz-border-radius: 20px;
+		-o-border-radius: 20px;
+		
+		background: radial-gradient(var(--yellow-miniButton-glass-color-dos), var(--yellow-miniButton-glass-color-uno));
+		background: -webkit-radial-gradient(var(--yellow-miniButton-glass-color-dos), var(--yellow-miniButton-glass-color-uno));
+		/* background: -moz-radial-gradient(#0abd0a, var(--yellow-miniButton-glass-color-uno));
+		background: -o-radial-gradient(#0abd0a, var(--yellow-miniButton-glass-color-uno)); */
+	}
+	#input-search{
+		align-self: right;
+        border: none;
+        padding: 3px;
+        border-radius: 5px ;
+        width: 130px;
+		margin-bottom: 5px;
+    }
+	#error-message{
+		text-align: center;
+		width: 250px;
+		font-size: .5rem;
+		margin-bottom: 5px;
+		color: var(--screen-bg-color-dos);
+		/* display: none; */
+	}
+	div.buttonstopsearch{
+		display: flex;
+		gap: 15px;
+		text-align: center;
+	}
+	div#yellowBox1
+	{	
+		line-height: 30px;
+		border: 1px solid var(--box-shadow-buttons-color);
+		width: 110px;
+		height: 30px;
+		background-color: var(--screen-bg-color-dos);
+		border-radius: 6px;
+		cursor: pointer;
+		/* -webkit-border-radius: 15px;
+		-moz-border-radius: 15px;
+		-o-border-radius: 15px; */
+		font-size: .9rem;
+		color: var(--white-font);
+		box-shadow: 0 0 20px var(--screen-bg-color-uno) inset;
+		-webkit-box-shadow: 0 0 20px var(--screen-bg-color-uno) inset;
+		/* -moz-box-shadow: 0 0 20px var(--red-barButton-color-dos) inset;
+		-o-box-shadow: 0 0 20px var(--red-barButton-color-dos) inset; */
+	}
+
+	div#yellowBox2
+	{	
+		line-height: 30px;
+		border: 1px solid var(--box-shadow-buttons-color);
+		width: 110px;
+		height: 30px;
+		background-color: var(--screen-bg-color-dos);
+		border-radius: 6px;
+		font-size: .9rem;
+		color: var(--white-font);
+		/* -webkit-border-radius: 15px;
+		-moz-border-radius: 15px;
+		-o-border-radius: 15px; */
+		cursor: pointer;
+		box-shadow: 0 0 20px var(--screen-bg-color-uno) inset;
+		-webkit-box-shadow: 0 0 20px var(--screen-bg-color-uno) inset;
+		/* -moz-box-shadow: 0 0 20px var(--red-barButton-color-dos) inset;
+		-o-box-shadow: 0 0 20px var(--red-barButton-color-dos) inset; */
+	}
+	.pokeball{
+		/* width: 150px; */
+		/* height: 150px; */
+		scale: .5;
+		animation: frames 1.2s  linear 0s infinite;
+	}
+	.caraTriste{
+		scale: .2;
+	}
+	  
+	  /* AnimationFrames */
+	  @keyframes frames{
+		0% {
+		  transform: rotate(0deg);
+		}
+		100%{
+		  transform: rotate(360deg);
+		}
+	  }
+	  @keyframes frames{
+		0% {
+		  transform: rotate(0deg);
+		}
+		100%{
+		  transform: rotate(360deg);
+		}
+	  }

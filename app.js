@@ -1,11 +1,13 @@
-// const inputSearch = document.getElementById('input-search');
+const inputSearch = document.getElementById('input-search');
 const divPicture = document.getElementById('picture');
 const pictureBox = document.getElementById('picturebox')
 const greenBoxUno = document.getElementById('greenBox1');
 const onOffButton = document.getElementById('onOffButton');
 const rightCross = document.getElementById('rightcross');
 const leftCross = document.getElementById('leftcross');
-const splash = document.getElementById('splash')
+const splash = document.getElementById('splash');
+const btnSearch = document.getElementById('yellowBox2');
+const errorMessage = document.getElementById('error-message')
 // cargar primero el dom y despues ejecuta el async
 document.addEventListener('DOMContentLoaded',()=>{
     almacenamientoPokemon('http://pokeapi.co/api/v2/pokemon?limit=150'); 
@@ -20,7 +22,7 @@ let posicionActual= 0
 // datoss de pokemons
 const almacenamientoPokemon = async(url) =>{
     try {
- 
+       
         const res = await fetch(url);
         const data = await res.json();
 
@@ -37,22 +39,19 @@ const almacenamientoPokemon = async(url) =>{
 
     // }
 }
-// const reStartAnimation = (()=>{
-//     splash.style.animation = "";
-//  })
+
 // PRENDER POKEDEX
 const onPokedex =()=>{
     onOffButton.addEventListener('click',()=>{
         divPicture.classList.toggle('onoff');
-        onOffButton.classList.toggle('onoff')
-        // console.log(arrayAlmacenamiento[0]);
-        // divPicture.innerHTML = `<img src="./assets/img/pokemon.png" alt="un pokemon" id="splash">`;
+        onOffButton.classList.toggle('onoff');
+        btnSearch.classList.toggle('onoff');
         splash.style.animation = "pokemon 3s ease";
-        // splash.classList.toggle('splash')
         if(onOffButton.classList.contains('onoff')){
-
-            // splash.classList.add('splash')
-            setTimeout(printData,3000,arrayAlmacenamiento[0])
+            setTimeout(()=>{
+                printData(arrayAlmacenamiento[0]);
+                search()
+            },3000)
         }else{
             
             pictureBox.innerHTML = '';
@@ -94,39 +93,31 @@ const backPokemon = ()=>{
         
     })
 }
-// console.log(arrayAlmacenamiento);
-// const search = () =>{
- 
-//     divPicture.innerHTML = `
-//     <section class="d-flex flex-column align-items-center justify-content-center d-none"  id="loading">
-//                 <strong class="mb-2">Cargando</strong>
-//                 <div class="spinner-border " role="status" aria-hidden="true"></div>
-//             </section>`;
-//     loadingDAta()
-//     // img.classList.remove('display')
-//     const textoIngresado = inputSearch.value.toLowerCase()
-//     if(textoIngresado.length>0 ){
-
-//         let elemento = []
-//         arrayAlmacenamiento.forEach(p=>{
-//             if(p.name.includes(textoIngresado)){
-//                 elemento = p  
-//             }
-//     })
-
-//     if(elemento.name === textoIngresado){
-//       setTimeout(()=>{
-//         loadingDAta()
-//         printData(elemento)
-//       },3000)
-//     }
-  
-// }
+// BUSCADOR
+const search = ()=>{
     
-// }
-// const loadingDAta = ()=>{
-//     const loading = document.getElementById('loading');
-//     loading.classList.toggle('d-none');
-// }
-
-// inputSearch.addEventListener('keyup',search)
+    btnSearch.addEventListener('click',()=>{
+        pictureBox.innerHTML = `<img src="./assets/img/pokeball.png" alt="pokeball" class="pokeball" id="pokeball">`
+        errorMessage.innerHTML = '';
+        const textoIngresado = inputSearch.value.toLowerCase()
+        console.log(textoIngresado);
+        // el metodo find devuelve el elemento encontrado o sino devuelve undefined
+       const pokemonExists =  arrayAlmacenamiento.find(e=>e.name === textoIngresado)
+        if(textoIngresado === ''){
+            pictureBox.innerHTML = `<img src="./assets/img/caraTriste.png" alt="caraTriste" class="caraTriste" id="caraTriste">`
+            errorMessage.textContent = 'Ingresa el nombre de un pokémon';
+            console.log(errorMessage);
+            console.log('vacio');
+        }
+        else if(pokemonExists !== undefined & textoIngresado !== ''){
+            console.log('dentro del else if');
+            setTimeout(printData,200,pokemonExists);
+            errorMessage.innerHTML = ''
+        }
+        else{
+            pictureBox.innerHTML = `<img src="./assets/img/caraTriste.png" alt="caraTriste" class="caraTriste" id="caraTriste">`
+            errorMessage.innerHTML = `El pokémon ${textoIngresado} no existe`
+            console.log('dentro del else');
+        }
+    })
+}
