@@ -13,8 +13,16 @@ const errorMessage = document.getElementById('error-message')
 const utterance = new SpeechSynthesisUtterance();
 utterance.voice = window.speechSynthesis.getVoices()[5];
 const arrayAlmacenamiento = [];
+const arraySpeciesPokemon = [];
+let typeEs = '';
+let typeGeneraEs = '';
+let typeMoveEs = '';
+let TypeDetailEs = '';
 let posicionActual = 0;
 let crossActiva = false;
+
+
+
 
 // cargar primero el dom y despues ejecuta el async
 document.addEventListener('DOMContentLoaded',()=>{
@@ -27,7 +35,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 // datoss de pokemons
 const almacenamientoPokemon = async(url) =>{
     try {
-       
+        
         const res = await fetch(url);
         const data = await res.json();
 
@@ -35,7 +43,16 @@ const almacenamientoPokemon = async(url) =>{
             const res = await fetch(data.results[i].url);
             const pokemon = await res.json();
             arrayAlmacenamiento.push(pokemon)
+            
         }
+        
+        for (let i = 0; i < arrayAlmacenamiento.length; i++) {
+            const res = await fetch(arrayAlmacenamiento[i].species.url);
+            const species = await res.json();
+            arraySpeciesPokemon.push(species);
+        }
+
+
         return    
     } catch (error) {
         console.log(error)
@@ -53,9 +70,22 @@ const onPokedex =()=>{
         btnSearch.classList.toggle('onoff');
         splash.style.animation = "pokemon 3s ease";
         if(onOffButton.classList.contains('onoff')){
+            getTypePokemon(arrayAlmacenamiento[0].types[0].type.url);
+
+            getMove(arrayAlmacenamiento[0].moves[0].move.url);
+            
             setTimeout(()=>{
                 printData(arrayAlmacenamiento[0]);
-                speechName(greenBoxUno.innerHTML);
+                getTypeGenera(arraySpeciesPokemon[0]);
+                getTypeGenera(arraySpeciesPokemon[0]);
+                getDetails(arraySpeciesPokemon[0])
+            
+
+                speechName(generarTexto(arrayAlmacenamiento[0].name,typeEs,typeGeneraEs,typeMoveEs,TypeDetailEs));
+
+                
+ 
+
                 search()
             },3000)
         }
@@ -118,6 +148,7 @@ const search = ()=>{
         console.log(textoIngresado);
         // el metodo find devuelve el elemento encontrado o sino devuelve undefined
        const pokemonExists =  arrayAlmacenamiento.find(e=>e.name === textoIngresado)
+       const pokemonExistArraySpecies = arraySpeciesPokemon.find(e=>e.name === textoIngresado)
         if(textoIngresado === ''){
             pictureBox.innerHTML = `<img src="./assets/img/caraTriste.png" alt="caraTriste" class="caraTriste" id="caraTriste">`
             errorMessage.textContent = 'Ingresa el nombre de un pokémon';
@@ -126,7 +157,17 @@ const search = ()=>{
         }
         else if(pokemonExists !== undefined & textoIngresado !== ''){
             console.log('dentro del else if');
-            setTimeout(printData,200,pokemonExists);
+            setTimeout(()=>{
+                printData(pokemonExists)
+                getTypePokemon(pokemonExists.types[0].type.url);
+                getMove(pokemonExists.moves[0].move.url);
+                getTypeGenera(pokemonExistArraySpecies);
+                getTypeGenera(pokemonExistArraySpecies);
+                getDetails(pokemonExistArraySpecies)
+                speechName(generarTexto(pokemonExists.name,typeEs,typeGeneraEs,typeMoveEs,TypeDetailEs))
+
+
+            },200,)
             errorMessage.innerHTML = ''
         }
         else{
@@ -137,8 +178,8 @@ const search = ()=>{
     })
 }
 //funcion para reproducir el nombre del pokemon por audio
-function speechName(name){
-    utterance.text = name ;
+function speechName(text){
+    utterance.text = text ;
     utterance.rate = 1.5;
     //esto es para que se pueda clickear el siguiente pokemon una vez que termine el audio
     utterance.addEventListener('end',()=>{
@@ -149,7 +190,55 @@ function speechName(name){
     speechSynthesis.speak(utterance);
     
 }
+// generar texto
+const generarTexto = (name,type,genera,move,details) =>{
+    const texto = `${name}. Pokémon tipo ${type}. Pertenece a la especie ${genera}. Su ataque mas poderoso es ${move}. ${details}`
+    return texto
+}
 
+
+    
+// optener el tipo de pokemon en espaniol porque por default viene en ingles
+const getTypePokemon = async(url) =>{
+    try {
+        const res = await fetch(url);
+        const  data = await res.json()
+        const typeSpanish = data.names.find(e=> e.language.name === 'es')
+        typeEs = typeSpanish.name
+    }catch (error) {
+        console.log(error);
+    }  
+    }
+    // optener el genera del pokemon en espaniol porque por default viene en ingles
+const getTypeGenera = (pokemon)=>{ 
+    const typeSpanish = pokemon.genera.find(e=> e.language.name === 'es')
+   
+    typeGeneraEs = typeSpanish.genus
+}
+    
+// obtener el ataque mas poderoso del pokemon en espaniol porque por default viene en ingles
+const getMove = async(url)=>{
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        // console.log(data.names);
+        const typeSpanish = data.names.find(e=> e.language.name === 'es');
+        // console.log((typeSpanish));
+        typeMoveEs = typeSpanish.name;
+        // console.log(typeMove);
+    } catch (error) {
+        console.log(error);
+    }   
+}
+// obtener los details de solo los primeros 3 details que sean en espaniol.
+const getDetails = (pokemon)=>{
+    
+    const typeSpanish = pokemon.flavor_text_entries.filter(e=> e.language.name === 'es')
+    const typeSpanishNoSpaces = typeSpanish.map(e=>e.flavor_text.replace(/\n/g," "))
+    console.log(typeSpanishNoSpaces);
+    TypeDetailEs = `${typeSpanishNoSpaces[0]} ${typeSpanishNoSpaces[1]} ${typeSpanishNoSpaces[2]}`
+    // console.log(`${typeSpanish[0].flavor_text} ${typeSpanish[1].flavor_text} ${typeSpanish[2].flavor_text}`);
+}
 //funcion que devuelve la voz seleccionada 0 y 1:mujer español, 2:hombre español
 // function getVoice(voiceIdx){
 //     const voices = window.speechSynthesis.getVoices();
