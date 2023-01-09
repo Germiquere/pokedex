@@ -289,7 +289,8 @@ div#buttonGlass
 	{
         overflow: hidden;
         position: relative;
-        transition: all 1s ease-in-out;
+        opacity: 1;
+		transition: all 1s ease-in-out;
 		display: flex;
 		height: 180px;
 		width: 180px;
@@ -297,12 +298,16 @@ div#buttonGlass
 		border: 3px solid var(--screen-bg-color-dos);
 		clear: both;
 		border-radius: 15px;
-		-webkit-border-radius: 15px;
+		/* -webkit-border-radius: 15px;
 		-moz-border-radius: 15px;
-		-o-border-radius: 15px;
-        transition: all 1s ease-in-out;
+		-o-border-radius: 15px; */
 	}
+	/* .sad-face{
+		transition: all 3s ease-in-out;
+	} */
+	
     #picturebox{
+		opacity: 0;
         display: flex;
         text-align: center;
         transition: all 1s ease-in-out;
@@ -711,29 +716,25 @@ div#buttonGlass
 		gap: 5px;
 		
 	}
-	div#whiteBox1
-	{	
+	.btn-stop{
 		border: 1px solid var(--box-shadow-buttons-color);
 		width: 45px;
 		height: 30px;
 		background-color: var(--screen-bg-color-border);
 		border-radius: 6px;
 		box-shadow: 0 0 20px var(--screen-bg-color-border) inset;
-		/* margin-bottom: 10px; */
+		cursor: pointer;
 	}
-    div#whiteBox2
-	{	
+	.btn-resume{
 		border: 1px solid var(--box-shadow-buttons-color);
 		width: 45px;
 		height: 30px;
 		background-color: var(--screen-bg-color-border);
-
 		border-radius: 6px;
 		box-shadow: 0 0 20px var(--screen-bg-color-border) inset;
-		-webkit-box-shadow: 0 0 20px var(--screen-bg-color-border) inset;
-		/* -moz-box-shadow: 0 0 20px var(--red-barButton-color-dos) inset;
-		-o-box-shadow: 0 0 20px var(--red-barButton-color-dos) inset; */
+		cursor: pointer;
 	}
+	
 	div#miniButtonGlass5
 	{	
 		border: 1px solid var(--box-shadow-buttons-color);
