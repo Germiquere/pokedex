@@ -18,20 +18,7 @@ utterance.voice = window.speechSynthesis.getVoices()[5];
 const arrayAlmacenamiento = [];
 const arraySpeciesPokemon = [];
 const typePokemonEn = [];
-let count = 0;
-
-const typePokemonEnPlusId = typePokemonEn.map(e=>{
-    const container = {};
-    container.id = count
-    container.names = e.names
-    count++
-    return container
-});
-
-
-// let typeEs = '';
-// let typeGeneraEs = '';
-// let TypeDetailEs = '';
+let typePokemonEnPlusId ;
 let posicionActual = 0;
 let crossActiva = false;
 let canSearch = false
@@ -39,27 +26,28 @@ let canSearch = false
 
 
 // cargar primero el dom y despues ejecuta el async
-document.addEventListener('DOMContentLoaded',()=>{
-    almacenamientoPokemon('http://pokeapi.co/api/v2/pokemon?limit=150'); 
+document.addEventListener('DOMContentLoaded',async()=>{
+    await almacenamientoPokemon('http://pokeapi.co/api/v2/pokemon?limit=150'); 
+    typePokemonEnPlusId = typePokemonEn.map((e,i)=>{
+        return {
+            id: i,
+            names: e.names,
+        }  
+    });
     onPokedex();
     nextPokemon();
     backPokemon();
 })
-
 // datoss de pokemons
 const almacenamientoPokemon = async(url) =>{
     try {
-        
         const res = await fetch(url);
         const data = await res.json();
-
         for (let i = 0; i < data.results.length; i++) {
             const res = await fetch(data.results[i].url);
             const pokemon = await res.json();
             arrayAlmacenamiento.push(pokemon)
-            
         }
-        
         for (let index = 0; index < arrayAlmacenamiento.length; index++) {
             const res = await fetch(arrayAlmacenamiento[index].types[0].type.url);
             const data = await res.json();
@@ -73,8 +61,6 @@ const almacenamientoPokemon = async(url) =>{
             const species = await res.json();
             arraySpeciesPokemon.push(species);
         }
-
-
         return    
     } catch (error) {
         console.log(error)
@@ -83,12 +69,7 @@ const almacenamientoPokemon = async(url) =>{
 
 
 // para obtener el id. hice un map del array y le agregue el id pero tengo problemas para llamarlo despues de que se haga el push al primer array porque creo que pasa antes de que termine el fetch
-
-const getIDPokemon = (pokemon)=>{
-    const id = typePokemonEnPlusId.find(e=>e.id === pokemon.id)
-    return id[0].names
-}
-console.log(typePokemonEnPlusId[0]);
+// console.log(typePokemonEnPlusId[0]);
 // let typePokemonEnPlusId = []
 // PRENDER POKEDEX
 const onPokedex =()=>{
@@ -97,21 +78,11 @@ const onPokedex =()=>{
         onOffButton.classList.toggle('onoff');
         btnSearch.classList.toggle('onoff');
         splash.style.animation = "pokemon 3s ease";
-        
-       
         if(onOffButton.classList.contains('onoff')){
-      
-            // console.log(typePokemonEnPlusId[0]);
             setTimeout(()=>{
                 printData(arrayAlmacenamiento[0]);
-                // console.log(typePokemonEn);
-                
-                
-
-                // NO BORRAR---------------------------------------------------------------
                 speechName(generarTexto(arrayAlmacenamiento[0].name,getTypePokemonEs(typePokemonEn[0]),getTypeGenera(arraySpeciesPokemon[0]),getDetails(arraySpeciesPokemon[0])));
                 search()
-                // btnSearch.disabled = false;
             },3000)
         }
        else{
@@ -121,7 +92,6 @@ const onPokedex =()=>{
             posicionActual = 0
             splash.style.animation = "none";
             errorMessage.textContent = '';
-            // btnSearch.disabled = true;
             
         }
 })
@@ -134,7 +104,6 @@ const printData = (data)=>{
 }
 // NEXT POKEMON
 const nextPokemon = ()=>{
-    
     rightCross.addEventListener('click',()=>{
         if(onOffButton.classList.contains('onoff') && crossActiva){
             if((arrayAlmacenamiento.length-1) > posicionActual){
@@ -158,7 +127,6 @@ const backPokemon = ()=>{
         
     })
 }
-
 // BUSCADOR
 const search = ()=>{
             btnSearch.addEventListener('click',()=>{
@@ -170,17 +138,14 @@ const search = ()=>{
                 // el metodo find devuelve el elemento encontrado o sino devuelve undefined
                const pokemonExists =  arrayAlmacenamiento.find(e=>e.name === textoIngresado)
                const pokemonExistArraySpecies = arraySpeciesPokemon.find(e=>e.name === textoIngresado)
-               console.log(typePokemonEnPlusId);
                 if(textoIngresado === ''){
                     pictureBox.innerHTML = `<img src="./assets/img/caraTriste.png"  alt="caraTriste" class="caraTriste" id="caraTriste">`
-                    errorMessage.textContent = 'Ingresa el nombre de un pokémon';
-                       
+                    errorMessage.textContent = 'Ingresa el nombre de un pokémon';      
                 }
                 else if(pokemonExists !== undefined & textoIngresado !== ''){
-   
                     setTimeout(()=>{
                         printData(pokemonExists)
-                        speechName(generarTexto(pokemonExists.name,'sarasa',getTypeGenera(pokemonExistArraySpecies),getDetails(pokemonExistArraySpecies)))
+                        speechName(generarTexto(pokemonExists.name,getTypePokemonEs(getIDPokemon(pokemonExists)),getTypeGenera(pokemonExistArraySpecies),getDetails(pokemonExistArraySpecies)))
                         },200,)
                         errorMessage.innerHTML = '';
                         inputSearch.value = '';
@@ -258,7 +223,9 @@ const generarTexto = (name,type,genera,details) =>{
 }
 
 // obteniendo el typo de pokemon en espaniol porque por defalt viene en ingles
+
 const getTypePokemonEs = (type)=>{
+    // console.log(type.names[0].language.name);
     const typeSpanish = type.names.find(e => e.language.name === 'es');
     return typeSpanish.name
 }
@@ -276,7 +243,12 @@ const getDetails = (pokemon)=>{
     const typeSpanishNoSpaces = typeSpanish.map(e=>e.flavor_text.replace(/\n/g," "))
     return `${typeSpanishNoSpaces[0]} ${typeSpanishNoSpaces[1]} ${typeSpanishNoSpaces[2]}`
 }
-// console.log(arrayAlmacenamiento);
+// get id pokemon
+const getIDPokemon = (pokemon)=>{
+    const id = typePokemonEnPlusId.find(e=>e.id === pokemon.id)
+    return id
+}
+
 
 
 //funcion que devuelve la voz seleccionada 0 y 1:mujer español, 2:hombre español

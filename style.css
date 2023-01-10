@@ -307,7 +307,7 @@ div#buttonGlass
 	} */
 	
     #picturebox{
-		opacity: 0;
+		opacity: 1;
         display: flex;
         text-align: center;
         transition: all 1s ease-in-out;
